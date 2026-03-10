@@ -1,0 +1,34 @@
+# --- Python & Environment ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.env
+.venv
+env/
+venv/
+
+# --- macOS Specific ---
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# --- IDEs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Project Specific (Data & Weights) ---
+# We ignore the contents of data, but keep the folder structure
+data/*
+!data/.gitkeep
+
+# Ignore large output files (plots, saved point clouds)
+outputs/
+*.ply
+*.obj
+
+# --- Jupyter ---
+.ipynb_checkpoints
