@@ -71,7 +71,7 @@ Going beyond traditional SfM, this engine includes a **Camera Ray Generator**. I
 
 ### Installation
 ```bash
-git clone https://github.com/yourusername/multiview-geometry-playground.git
+git clone https://github.com/punkostigyork/multiview-geometry-playground
 cd multiview-geometry-playground
 pip install -r requirements.txt
 ```
@@ -97,7 +97,7 @@ Open ```notebooks/notebook.ipynb``` to walk through the step-by-step pipeline fr
   title = {Multiview Geometry & 3D Reconstruction Playground},
   year = {2026},
   publisher = {GitHub},
-  url = {}
+  url = {https://github.com/punkostigyork/multiview-geometry-playground}
 }
 ```
 
