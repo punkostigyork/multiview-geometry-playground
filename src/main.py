@@ -6,7 +6,7 @@ from src.geometry import estimate_fundamental_matrix_robust, triangulate_points,
 from src.visualization import draw_epipolar_lines
 
 def run_pipeline():
-    print("🚀 Starting Multiview Geometry Pipeline...")
+    print("Starting Multiview Geometry Pipeline...")
     
     # 1. Load Data
     img1 = cv2.imread('data/temple/temple0001.png')
@@ -17,27 +17,40 @@ def run_pipeline():
     cam2 = PinholeCamera.from_middlebury(metadata, 2)
     
     # 2. Match Features
-    print("🔍 Detecting SIFT features...")
+    print("Detecting SIFT features...")
     pts1, pts2, kp1, kp2, matches = detect_and_match(img1, img2)
     
     # 3. Robust Estimation (RANSAC)
-    print("🛠️ Estimating Fundamental Matrix (RANSAC)...")
+    print("Estimating Fundamental Matrix (RANSAC)...")
     F, in1, in2 = estimate_fundamental_matrix_robust(pts1, pts2)
     
     # 4. Triangulation
-    print("📐 Triangulating 3D points...")
+    print("Triangulating 3D points...")
     pts3d = triangulate_points(in1, in2, cam1.P, cam2.P)
     
     # 5. Validation
     err, _ = compute_reprojection_error(in1, pts3d, cam1.P)
-    print(f"✅ Success! Mean Reprojection Error: {err:.4f} pixels")
-    print(f"📦 Reconstructed {len(pts3d)} 3D points.")
+    print(f"Success! Mean Reprojection Error: {err:.4f} pixels")
+    print(f"Reconstructed {len(pts3d)} 3D points.")
 
     # 6. Quick Viz
-    print("🖼️ Displaying Epipolar Geometry...")
+    print("Displaying Epipolar Geometry...")
     v1, v2 = draw_epipolar_lines(img1, img2, F, in1, in2)
     plt.subplot(121), plt.imshow(cv2.cvtColor(v1, cv2.COLOR_BGR2RGB))
     plt.subplot(122), plt.imshow(cv2.cvtColor(v2, cv2.COLOR_BGR2RGB))
+    plt.show()
+
+    # 7. 3D Visualization
+    fig = plt.figure(figsize=(10, 10))
+    ax = fig.add_subplot(111, projection='3d')
+    
+    # Plot the triangulated points
+    ax.scatter(pts3d[:, 0], pts3d[:, 1], pts3d[:, 2], c='r', marker='o', s=2)
+    
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.set_title('3D Reconstruction - Sparse Cloud')
     plt.show()
 
 if __name__ == "__main__":

@@ -16,7 +16,6 @@ def detect_and_match(img1, img2, ratio_thresh=0.75):
             pts1.append(kp1[m.queryIdx].pt)
             pts2.append(kp2[m.trainIdx].pt)
             
-    # RETURN kp1 and kp2 as well!
     return np.array(pts1), np.array(pts2), kp1, kp2, good_matches
 
 def detect_and_match(img1, img2, ratio_thresh=0.75):
@@ -27,7 +26,6 @@ def detect_and_match(img1, img2, ratio_thresh=0.75):
     flann = cv2.FlannBasedMatcher(dict(algorithm=1, trees=5), dict(checks=50))
     matches = flann.knnMatch(des1, des2, k=2)
 
-    # INITIALIZE THESE HERE
     pts1, pts2, good_matches = [], [], []
     
     for m, n in matches:
@@ -36,11 +34,9 @@ def detect_and_match(img1, img2, ratio_thresh=0.75):
             pts1.append(kp1[m.queryIdx].pt)
             pts2.append(kp2[m.trainIdx].pt)
             
-    # Convert to numpy arrays early
     pts1 = np.array(pts1)
     pts2 = np.array(pts2)
 
-    # ONLY refine if we actually found points
     if len(pts1) > 0:
         gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)

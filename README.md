@@ -89,6 +89,13 @@ Open ```notebooks/notebook.ipynb``` to walk through the step-by-step pipeline fr
 
 ---
 
+### Run it from terminal in root
+
+```bash
+export PYTHONPATH=$PYTHONPATH:$(pwd)/src
+python src/main.py
+```
+
 ## 📄 Cite
 
 ```bibtex

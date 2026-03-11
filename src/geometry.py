@@ -11,27 +11,22 @@ def normalize_points(pts):
     return pts_norm[:, :2], T
 
 def estimate_fundamental_matrix(pts1, pts2):
-    # 1. Normalize
     n_pts1, T1 = normalize_points(pts1)
     n_pts2, T2 = normalize_points(pts2)
 
-    # 2. Build Matrix A
     A = np.zeros((len(pts1), 9))
     for i in range(len(pts1)):
         u1, v1 = n_pts1[i]
         u2, v2 = n_pts2[i]
         A[i] = [u2*u1, u2*v1, u2, v2*u1, v2*v1, v2, u1, v1, 1]
 
-    # 3. Solve SVD
     _, _, Vt = np.linalg.svd(A)
     F = Vt[-1].reshape(3, 3)
 
-    # 4. Enforce Rank-2
     U, S, Vt = np.linalg.svd(F)
     S[2] = 0
     F = U @ np.diag(S) @ Vt
 
-    # 5. Denormalize
     return T2.T @ F @ T1
 
 
@@ -76,15 +71,15 @@ def compute_reprojection_error(pts2d, pts3d, P):
     Calculates the average distance between original 2D points 
     and 3D points projected back into the image.
     """
-    # 1. Convert 3D points to homogeneous (N, 4)
+    # Convert 3D points to homogeneous (N, 4)
     n = pts3d.shape[0]
     pts3d_hom = np.hstack((pts3d, np.ones((n, 1))))
     
-    # 2. Project back to 2D
+    # Project back to 2D
     projected_hom = (P @ pts3d_hom.T).T
     projected_2d = projected_hom[:, :2] / projected_hom[:, 2:3]
     
-    # 3. Calculate Euclidean distance
+    # Calculate Euclidean distance
     errors = np.linalg.norm(pts2d - projected_2d, axis=1)
     return np.mean(errors), errors
 
@@ -97,7 +92,7 @@ def estimate_fundamental_matrix_robust(pts1, pts2):
     # cv2.FM_RANSAC applies Random Sample Consensus to find the best F
     F, mask = cv2.findFundamentalMat(pts1, pts2, cv2.FM_RANSAC, 1.0, 0.99)
     
-    # We only keep points where the mask is 1 (the 'inliers')
+    # We only keep points where the mask is 1 - the 'inliers'
     inliers1 = pts1[mask.ravel() == 1]
     inliers2 = pts2[mask.ravel() == 1]
     
