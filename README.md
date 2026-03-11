@@ -92,7 +92,7 @@ Open ```notebooks/notebook.ipynb``` to walk through the step-by-step pipeline fr
 ## 📄 Cite
 
 ```bibtex
-@misc{nanochat,
+@misc{multiview-geometry-playground,
   author = {Györk Pünkösti},
   title = {Multiview Geometry & 3D Reconstruction Playground},
   year = {2026},
