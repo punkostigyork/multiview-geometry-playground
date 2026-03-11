@@ -11,12 +11,12 @@ How do we turn a series of flat images into a metric 3D model? This repository s
 
 ```text
 .
-├── LICENSE                          # MIT Legal permissions
+├── LICENSE                           # MIT Legal permissions
 ├── README.md                         # Project documentation and setup
 ├── assets
 │   └── reconstruction_3D.gif         # 360-degree rotation demo
 ├── data                              # Source images (Middlebury Temple)
-├── environment.yml                  # Conda environment configuration
+├── environment.yml                   # Conda environment configuration
 ├── notebooks
 │   ├── notebook.ipynb                # Main reconstruction walkthrough
 │   └── temple_reconstruction.ply     # Exported 3D point cloud file
