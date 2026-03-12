@@ -2,6 +2,8 @@
 
 A from-scratch Computer Vision engine that recovers 3D structure from 2D motion. This project bypasses "black-box" libraries to implement the fundamental linear algebra and geometric constraints that power modern SLAM, SfM, and Neural Rendering (NeRF) pipelines.
 
+![Temples](assets/temple_picture.png)
+
 ![Temple Reconstruction](assets/reconstruction_3D.gif)
 
 ## 🎯 The Core Problem
